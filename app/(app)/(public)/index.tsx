@@ -1,6 +1,8 @@
 import AppleAuthButton from "@/components/auth/AppleAuthButton";
 import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
+import SmoothInfinityScroll from "@/components/SmoothInfinityScroll";
 import { Fonts } from "@/constants/theme";
+import { LinearGradient } from "expo-linear-gradient";
 import {
   Image,
   Linking,
@@ -17,7 +19,27 @@ export default function Index() {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.infiniteScrollContainer}></View>
+      <View style={styles.infiniteScrollContainer}>
+        <View>
+          <SmoothInfinityScroll scrollDirection="down" iconSet="set1" />
+        </View>
+        <View>
+          <SmoothInfinityScroll scrollDirection="up" iconSet="set2" />
+        </View>
+        <View>
+          <SmoothInfinityScroll scrollDirection="down" iconSet="set3" />
+        </View>
+        <LinearGradient
+          colors={["transparent", "#fff"]}
+          style={{
+            position: "absolute",
+            height: 200,
+            left: 0,
+            right: 0,
+            bottom: 0,
+          }}
+        />
+      </View>
       <View style={styles.contentContainer}>
         <Image
           source={require("@/assets/images/wolt-logo.png")}
@@ -74,9 +96,6 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     marginBottom: 20,
   },
-  infiniteScrollContainer: {
-    flex: 0.8,
-  },
   tagline: {
     fontSize: 32,
     fontFamily: Fonts.brandBlack,
@@ -116,5 +135,13 @@ const styles = StyleSheet.create({
   },
   privacyLink: {
     color: "#4285f4",
+  },
+  infiniteScrollContainer: {
+    flex: 0.8,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+    overflow: "hidden",
   },
 });
