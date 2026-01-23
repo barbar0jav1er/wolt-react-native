@@ -11,6 +11,17 @@ export default function Layout() {
           contentStyle: { backgroundColor: "#fff" },
         }}
       />
+      <Stack.Screen
+        name="other-options"
+        options={{
+          headerShown: false,
+          presentation: "formSheet",
+          title: "",
+          headerShadowVisible: false,
+          sheetCornerRadius: 16,
+          sheetAllowedDetents: [0.6],
+        }}
+      />
     </Stack>
   );
 }
