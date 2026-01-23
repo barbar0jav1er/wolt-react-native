@@ -7,7 +7,15 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-const queryClient = new QueryClient();
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5, // 5 min,
+      retry: 1,
+    },
+  },
+});
 
 export default function RootLayout() {
   let [fontsLoaded] = useFonts({
