@@ -6,17 +6,19 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CategoryList } from "../CategoryList";
 import RestaurantList from "../RestaurantList";
 
+const HEADER_OFFSET = 60;
+
 const RestaurantListPage = () => {
   const insets = useSafeAreaInsets();
   return (
     <View style={styles.container}>
       <Animated.ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingTop: insets.top + 60 }}
+        contentContainerStyle={{ paddingTop: insets.top + HEADER_OFFSET }}
       >
-        <Text style={styles.pageTittle}>Restaurant</Text>
+        <Text style={styles.pageTitle}>Restaurant</Text>
         <CategoryList />
-        <Text style={styles.allRestaurantsTittle}>All restaurants</Text>
+        <Text style={styles.allRestaurantsTitle}>All restaurants</Text>
         <RestaurantList />
       </Animated.ScrollView>
     </View>
@@ -29,13 +31,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  pageTittle: {
+  pageTitle: {
     fontFamily: Fonts.brandBlack,
     fontSize: 30,
     marginBottom: 16,
     paddingHorizontal: 16,
   },
-  allRestaurantsTittle: {
+  allRestaurantsTitle: {
     fontFamily: Fonts.brandBold,
     fontSize: 20,
     marginBottom: 16,

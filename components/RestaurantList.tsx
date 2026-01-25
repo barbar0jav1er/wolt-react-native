@@ -38,7 +38,7 @@ const RestaurantList = () => {
             <View style={styles.metadata}>
               <Ionicons name="bicycle-outline" size={16} color={Colors.muted} />
               <Text style={styles.metadataText}>
-                €{item.deliveryFee.toFixed(2)}
+                €{(item.deliveryFee ?? 0).toFixed(2)}
               </Text>
               <Text style={styles.dot}>•</Text>
               <Text style={styles.metadataText}>€€€€</Text>
