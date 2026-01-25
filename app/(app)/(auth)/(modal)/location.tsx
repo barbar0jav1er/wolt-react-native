@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: Fonts.brandBold,
     fontSize: 32,
-    fontWeight: 900,
+    fontWeight: "900",
     marginBottom: 12,
   },
   locationItem: {

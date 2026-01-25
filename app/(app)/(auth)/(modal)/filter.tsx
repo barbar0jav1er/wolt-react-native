@@ -120,7 +120,7 @@ const Page = () => {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={styles.chipContainer}
+          contentContainerStyle={styles.chipContainer}
         >
           {sortOptions.map((option) => (
             <TouchableOpacity
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: Fonts.brandBold,
     fontSize: 32,
-    fontWeight: 900,
+    fontWeight: "900",
     marginBottom: 24,
   },
   filterSection: {

@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   otherButtonText: {
     color: Colors.muted,
     fontSize: 18,
-    fontWeight: 600,
+    fontWeight: "600",
   },
 
   privacyContainer: {
