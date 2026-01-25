@@ -1,4 +1,4 @@
-import zustandStorage from "@/zutand-storage";
+import zustandStorage from "@/utils/zustand-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
