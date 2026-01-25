@@ -1,7 +1,7 @@
 import AppleAuthButton from "@/components/auth/AppleAuthButton";
 import GoogleAuthButton from "@/components/auth/GoogleAuthButton";
 import SmoothInfinityScroll from "@/components/SmoothInfinityScroll";
-import { Fonts } from "@/constants/theme";
+import { Colors, Fonts } from "@/constants/theme";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link } from "expo-router";
 import {
@@ -66,7 +66,7 @@ export default function Index() {
             </Link>
           </Animated.View>
         </View>
-        
+
         {/* Privacy */}
         <Animated.View
           style={styles.privacyContainer}
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   otherButtonText: {
-    color: "#666",
+    color: Colors.muted,
     fontSize: 18,
     fontWeight: 600,
   },
