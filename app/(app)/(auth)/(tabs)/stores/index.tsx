@@ -1,12 +1,61 @@
+import { CategoryList } from "@/components/CategoryList";
+import RestaurantHeader from "@/components/RestaurantHeader";
+import RestaurantList from "@/components/RestaurantList";
+import { Fonts } from "@/constants/theme";
 import React from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const Stores = () => {
+const HEADER_OFFSET = 60;
+
+const RestaurantListPage = () => {
+  const insets = useSafeAreaInsets();
+  const scrollOffset = useSharedValue(0);
+
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (e) => {
+      scrollOffset.value = e.contentOffset.y;
+    },
+  });
+
   return (
-    <View>
-      <Text>Stores</Text>
+    <View style={styles.container}>
+      <RestaurantHeader title="Stores" scrollOffset={scrollOffset} />
+      <Animated.ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingTop: insets.top + HEADER_OFFSET }}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
+      >
+        <Text style={styles.pageTitle}>Stores</Text>
+        <CategoryList />
+        <Text style={styles.allRestaurantsTitle}>All stores</Text>
+        <RestaurantList />
+      </Animated.ScrollView>
     </View>
   );
 };
 
-export default Stores;
+export default RestaurantListPage;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  pageTitle: {
+    fontFamily: Fonts.brandBlack,
+    fontSize: 30,
+    marginBottom: 16,
+    paddingHorizontal: 16,
+  },
+  allRestaurantsTitle: {
+    fontFamily: Fonts.brandBold,
+    fontSize: 20,
+    marginBottom: 16,
+    paddingHorizontal: 16,
+  },
+});
