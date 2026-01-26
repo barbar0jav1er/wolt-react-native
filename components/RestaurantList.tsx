@@ -1,6 +1,7 @@
 import { Colors } from "@/constants/theme";
 import { useRestaurants } from "@/hooks/useRestaurants";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { Link } from "expo-router";
 import React from "react";
 import {
   ActivityIndicator,
@@ -26,27 +27,31 @@ const RestaurantList = () => {
     <>
       {restaurants?.map((item) => (
         <View key={item.id}>
-          {/* <Link> */}
-          <TouchableOpacity style={styles.card}>
-            <Image source={item.image!} style={styles.image} />
-            <View style={styles.info}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.description} numberOfLines={2}>
-                {item.description}
-              </Text>
-            </View>
-            <View style={styles.metadata}>
-              <Ionicons name="bicycle-outline" size={16} color={Colors.muted} />
-              <Text style={styles.metadataText}>
-                €{(item.deliveryFee ?? 0).toFixed(2)}
-              </Text>
-              <Text style={styles.dot}>•</Text>
-              <Text style={styles.metadataText}>€€€€</Text>
-              <Text style={styles.dot}>•</Text>
-              <Ionicons name="happy-outline" size={16} color={Colors.muted} />
-            </View>
-          </TouchableOpacity>
-          {/* </Link> */}
+          <Link href={`/(modal)/(restaurant)/${item.id}`} asChild>
+            <TouchableOpacity style={styles.card}>
+              <Image source={item.image!} style={styles.image} />
+              <View style={styles.info}>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.description} numberOfLines={2}>
+                  {item.description}
+                </Text>
+              </View>
+              <View style={styles.metadata}>
+                <Ionicons
+                  name="bicycle-outline"
+                  size={16}
+                  color={Colors.muted}
+                />
+                <Text style={styles.metadataText}>
+                  €{(item.deliveryFee ?? 0).toFixed(2)}
+                </Text>
+                <Text style={styles.dot}>•</Text>
+                <Text style={styles.metadataText}>€€€€</Text>
+                <Text style={styles.dot}>•</Text>
+                <Ionicons name="happy-outline" size={16} color={Colors.muted} />
+              </View>
+            </TouchableOpacity>
+          </Link>
         </View>
       ))}
     </>

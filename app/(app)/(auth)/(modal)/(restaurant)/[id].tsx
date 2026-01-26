@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/theme";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -6,7 +7,7 @@ const Page = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Page: {id}</Text>
     </View>
   );
@@ -14,4 +15,9 @@ const Page = () => {
 
 export default Page;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
+});
