@@ -1,11 +1,12 @@
 import MenuItem from "@/components/MenuItem";
+import RestaurantDetailHeader from "@/components/RestaurantDetailHeader";
 import { Colors } from "@/constants/theme";
 import { Dish } from "@/data/restaurant_menu";
 import { useMenu } from "@/hooks/useMenu";
 import { useRestaurant } from "@/hooks/useRestaurants";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -29,6 +30,8 @@ import Svg, { Path } from "react-native-svg";
 
 const { width } = Dimensions.get("window");
 const IMAGE_HIGHT = 300;
+const STICKY_THRESHOLD_START = 265;
+const STICKY_THRESHOLD_END = 320;
 
 const AnimatedSectionList = Animated.createAnimatedComponent(SectionList<Dish>);
 
@@ -46,12 +49,47 @@ const Page = () => {
   const { data: restaurant, isLoading: restaurantLoading } = useRestaurant(id);
   const { data: menu, isLoading: menuLoading } = useMenu(id);
 
+  const handleCategoryPress = (index: number) => () => {
+    setActiveCategory(index);
+    sectionListRef.current?.scrollToLocation({
+      sectionIndex: index,
+      itemIndex: 0,
+      animated: true,
+      viewOffset: insets.top + 100,
+    });
+    scrollCategoryTabIntoView(index);
+  };
+
+  const scrollCategoryTabIntoView = (index: number) => {
+    categoryScrollRef.current?.scrollTo({
+      x: index * categoryTabWidth - width / 2 + categoryTabWidth / 2,
+      animated: true,
+    });
+  };
+
   const sections =
     menu?.map((category) => ({
       title: category.category,
       subtitle: category.subtitle,
       data: category.dishes,
     })) || [];
+
+  const onViewableItemChanges = useCallback(
+    ({ viewableItems }: any) => {
+      if (viewableItems.length > 0) {
+        const firstVisibleSection = viewableItems[0].section;
+        const sectionIndex = sections.findIndex(
+          (s) => s.title === firstVisibleSection.title,
+        );
+
+        if (sectionIndex !== -1 && sectionIndex !== activeCategory) {
+          setActiveCategory(sectionIndex);
+          scrollCategoryTabIntoView(sectionIndex);
+        }
+      }
+    },
+    [sections, activeCategory],
+  );
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (e) => {
@@ -88,6 +126,17 @@ const Page = () => {
     return { opacity };
   });
 
+  const stickyTabsStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(
+      scrollOffset.value,
+      [STICKY_THRESHOLD_START, STICKY_THRESHOLD_END],
+      [0, 1],
+      Extrapolation.CLAMP,
+    );
+
+    return { opacity };
+  });
+
   if (restaurantLoading || menuLoading)
     return (
       <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
@@ -110,6 +159,47 @@ const Page = () => {
         style={[styles.bgImage, parallaxStyle]}
       />
       <Animated.View style={[styles.witheOverlay, overlayStyle]} />
+      <View style={{ zIndex: 100 }}>
+        <RestaurantDetailHeader scrollOffset={scrollOffset} />
+      </View>
+
+      <Animated.View
+        style={[
+          styles.stickyTabOverlay,
+          { top: insets.top + 64 },
+          stickyTabsStyle,
+        ]}
+      >
+        <View style={styles.categoryStickyTabsContainer}>
+          <ScrollView
+            horizontal
+            ref={categoryScrollRef}
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.categoryTabs}
+          >
+            {menu?.map((category, index) => (
+              <TouchableOpacity
+                key={`sticky-${index}`}
+                style={[
+                  styles.categoryTab,
+                  activeCategory === index && styles.categoryTabActive,
+                ]}
+                onPress={handleCategoryPress(index)}
+              >
+                <Text
+                  style={[
+                    styles.categoryTabText,
+                    activeCategory === index && styles.categoryTabTextActive,
+                  ]}
+                >
+                  {category.category}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+      </Animated.View>
+
       <AnimatedSectionList
         ref={sectionListRef}
         sections={sections}
@@ -118,6 +208,7 @@ const Page = () => {
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
         stickySectionHeadersEnabled={false}
+        onViewableItemsChanged={onViewableItemChanges}
         renderSectionHeader={({ section }: { section: any }) => (
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>{section.title}</Text>
@@ -315,5 +406,36 @@ const styles = StyleSheet.create({
     width,
     height: IMAGE_HIGHT,
     backgroundColor: Colors.background,
+  },
+  stickyTabOverlay: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    zIndex: 100,
+    backgroundColor: Colors.background,
+  },
+  categoryStickyTabsContainer: {
+    boxShadow: "0px 4px 2px -2px rgba(0,0,0,0.1)",
+  },
+  categoryTabs: {
+    paddingTop: 12,
+    paddingHorizontal: 16,
+    gap: 20,
+  },
+  categoryTab: {
+    paddingBottom: 12,
+  },
+  categoryTabText: {
+    fontSize: 15,
+    color: Colors.muted,
+    fontWeight: "500",
+  },
+  categoryTabActive: {
+    borderBottomWidth: 3,
+    borderBottomColor: Colors.secondary,
+  },
+  categoryTabTextActive: {
+    color: Colors.secondary,
+    fontWeight: "600",
   },
 });
