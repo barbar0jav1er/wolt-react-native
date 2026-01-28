@@ -1,14 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const OrderPage = () => {
+const Page = () => {
   return (
     <View>
-      <Text>OrderPage</Text>
+      <Text>checkout</Text>
     </View>
   );
 };
 
-export default OrderPage;
+export default Page;
 
 const styles = StyleSheet.create({});
