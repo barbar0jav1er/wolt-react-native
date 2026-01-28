@@ -1,50 +1,66 @@
-# Welcome to your Expo app 👋
+# Wolt Clone - React Native & Expo
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A high-fidelity clone of the Wolt delivery application built with React Native and Expo. This project was developed to explore advanced UI patterns, complex animations, and seamless user experiences in mobile applications.
 
-## Get started
+## Showcase
 
-1. Install dependencies
+The project replicates the smooth interactions of the original app, utilizing `react-native-reanimated` for native-performance animations.
 
+### Interactions & Animations
+
+| Sticky Header | Login Flow | Cart Gestures |
+| :--- | :--- | :--- |
+| ![Header Animation](docs/main-screen-header-animation.gif) | ![Login Animation](docs/login-page-animation.gif) | ![Cart Animation](docs/dismiss-product-from-cart.gif) |
+
+### Screen Captures
+
+| Discovery & Map | Restaurant Detail | Schedule & Cart |
+| :--- | :--- | :--- |
+| ![Map Page](docs/map-page.png) | ![Restaurant](docs/restaurant-page.png) | ![Schedule](docs/schedule-order-picker.png) |
+
+## Technical Features
+
+*   **Animations:** Implementation of complex interpolation, parallax effects, and layout animations using React Native Reanimated.
+*   **Navigation:** Robust file-based routing with Expo Router, including nested stacks, tabs, and modal patterns.
+*   **State Management:** High-performance state handling with Zustand and ultra-fast persistence via MMKV.
+*   **Gestures:** Interactive UI components built with React Native Gesture Handler.
+*   **Maps:** Integrated native map views and location services.
+*   **Architecture:** Clean and modular structure separating services, hooks (stores), and UI components.
+
+## Tech Stack
+
+*   **Framework:** Expo (SDK 54) / React Native
+*   **Routing:** Expo Router
+*   **Animation:** React Native Reanimated
+*   **State:** Zustand & React Query
+*   **Storage:** MMKV
+*   **UI:** Expo Blur, Linear Gradient, and SVG support
+
+## Installation
+
+1. Clone the repository:
    ```bash
-   npm install
+   git clone https://github.com/barbar0jav1er/wolt-react-native.git
    ```
 
-2. Start the app
+2. Install dependencies:
+   ```bash
+   bun install # or npm install
+   ```
 
+3. Start the project:
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+## Project Structure
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+*   `/app`: File-based routing (Expo Router).
+*   `/components`: Atomic and screen-level components.
+*   `/hooks`: Logic and state management (Zustand stores).
+*   `/services`: API and data handling logic.
+*   `/docs`: Media assets for documentation.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+*Disclaimer: This project is for educational and portfolio purposes. All design rights belong to Wolt.*
